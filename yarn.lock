@@ -939,9 +939,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-flow/core@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@vue-flow/core@npm:1.7.1"
+"@vue-flow/background@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@vue-flow/background@npm:1.0.0"
+  peerDependencies:
+    "@vue-flow/core": ^1.0.0
+    vue: ^3.2.37
+  checksum: 37dd4c00679283c7eaf8bb2de85d88e75e608e05bc51845baabd9935ae560fd884a8fd8d561d90982d0ddebabea7bb2c14daafc3f48c6cb8382990473707bdd6
+  languageName: node
+  linkType: hard
+
+"@vue-flow/controls@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@vue-flow/controls@npm:1.0.0"
+  peerDependencies:
+    "@vue-flow/core": ^1.0.0
+    vue: ^3.2.37
+  checksum: 80072754729e18cf10bd9b3694497a5d3ff94370557ca6a2b64e7e8d5918d20bfbf3892ef729ea674a4c2b3319c3c01e7c82698bf64a4e62876ee9b741cd1b1e
+  languageName: node
+  linkType: hard
+
+"@vue-flow/core@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "@vue-flow/core@npm:1.9.1"
   dependencies:
     "@vueuse/core": ^9.6.0
     d3-drag: ^3.0.0
@@ -949,7 +969,43 @@ __metadata:
     d3-zoom: ^3.0.0
   peerDependencies:
     vue: ^3.2.25
-  checksum: eef1498e61656ca64e42540b7757bb31f4494505821016d2708dc57dccfc82e2549f81c6f0a1cd1f107608e78e75981410b59240beec9624514ba49eaefb10b2
+  checksum: e3c05f8a05e9090765ad18b32270816e0b84a382821b087701d7c01cc22dae248c7bc68f16b0bd171a46cbec67b6f6e7c1bc60946933c5844163861d2ba4a585
+  languageName: node
+  linkType: hard
+
+"@vue-flow/minimap@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@vue-flow/minimap@npm:1.0.0"
+  dependencies:
+    d3-selection: ^3.0.0
+    d3-zoom: ^3.0.0
+  peerDependencies:
+    "@vue-flow/core": ^1.0.0
+    vue: ^3.2.37
+  checksum: 97eeaccd5a62a14c461551f7a41e2fdfb268e4ed8644a0c8fa5458688b533d091e9453e3f00e4557a2e156db42a07f77cce048da14776838d3648e10e81c394f
+  languageName: node
+  linkType: hard
+
+"@vue-flow/node-resizer@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@vue-flow/node-resizer@npm:1.0.0"
+  dependencies:
+    d3-drag: ^3.0.0
+    d3-selection: ^3.0.0
+  peerDependencies:
+    "@vue-flow/core": ^1.0.0
+    vue: ^3.2.37
+  checksum: 764edd14eae23f101ff6630d2e2a91ed2225328003c85481d13aff8269450d0336ceefd5fb6287d42e24cb6b5444c26fbcfeaa9c447f631fcfa19e261e81815b
+  languageName: node
+  linkType: hard
+
+"@vue-flow/node-toolbar@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@vue-flow/node-toolbar@npm:1.0.1"
+  peerDependencies:
+    "@vue-flow/core": ^1.0.0
+    vue: ^3.2.37
+  checksum: 440f99822b16f5df1ee3ec5f6eb03c94441ff3023f9a82af602fdacbcd1a34f9247ea45bd48c0f6398c3a8ab130ba41351a9e4e92f9f7a316f29a1210cb63c71
   languageName: node
   linkType: hard
 
@@ -5299,7 +5355,12 @@ __metadata:
   dependencies:
     "@braks/vue-flow": latest
     "@pinia/nuxt": ^0.4.6
-    "@vue-flow/core": ^1.7.1
+    "@vue-flow/background": ^1.0.0
+    "@vue-flow/controls": ^1.0.0
+    "@vue-flow/core": ^1.9.1
+    "@vue-flow/minimap": ^1.0.0
+    "@vue-flow/node-resizer": ^1.0.0
+    "@vue-flow/node-toolbar": ^1.0.1
     nuxt: 3.0.0
   languageName: unknown
   linkType: soft

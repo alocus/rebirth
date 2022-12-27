@@ -10,7 +10,12 @@
   "dependencies": {
     "@braks/vue-flow": "latest",
     "@pinia/nuxt": "^0.4.6",
-    "@vue-flow/core": "^1.7.1"
+    "@vue-flow/background": "^1.0.0",
+    "@vue-flow/controls": "^1.0.0",
+    "@vue-flow/core": "^1.9.1",
+    "@vue-flow/minimap": "^1.0.0",
+    "@vue-flow/node-resizer": "^1.0.0",
+    "@vue-flow/node-toolbar": "^1.0.1"
   },
   "devDependencies": {
     "nuxt": "3.0.0"
