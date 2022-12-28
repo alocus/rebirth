@@ -12,11 +12,13 @@ import Sidebar from './Sidebar.vue'
 let id = 0
 const getId = () => `dndnode_${id++}`
 
+const flowKey = 'nodes-flow'
+
 /**
  * useVueFlow provides all event handlers and store properties
  * You can pass the composable an object that has the same properties as the VueFlow component props
  */
-const { onPaneReady, onNodeDragStop, onConnect, addEdges, setTransform, toObject, findNode, nodes, edges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
+const { setNodes, setEdges, dimensions, onPaneReady, onNodeDragStop, onConnect, addEdges, setTransform, toObject, findNode, nodes, edges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
   nodes: [
     {
       id: '1',
@@ -33,6 +35,22 @@ const { onPaneReady, onNodeDragStop, onConnect, addEdges, setTransform, toObject
  */
  const elements = ref(initialElements)
 
+ const onSave = () => {
+  localStorage.setItem(flowKey, JSON.stringify(toObject()))
+}
+
+const onRestore = () => {
+  const flow = JSON.parse(localStorage.getItem(flowKey))
+
+  if (flow) {
+    const [x = 0, y = 0] = flow.position
+    setNodes(flow.nodes)
+    setEdges(flow.edges)
+    setTransform({ x, y, zoom: flow.zoom || 0 })
+  }
+}
+
+
 /**
  * This is a Vue Flow event-hook which can be listened to from anywhere you call the composable, instead of only on the main component
  *
@@ -43,8 +61,6 @@ onPaneReady(({ fitView }) => {
 })
 
 onNodeDragStop((e) => console.log('drag stop', e))
-
-
 
 const onDragOver = (event) => {
   event.preventDefault()
@@ -89,6 +105,19 @@ const resetTransform = () => setTransform({ x: 0, y: 0, zoom: 1 })
 
 const toggleClass = () => (dark.value = !dark.value)
 
+const saveFile = () => {
+  const data = JSON.stringify(toObject())
+	let filename = 'node-flow.json';
+	let element = document.createElement('a');
+	element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(data));
+	element.setAttribute('download', filename);
+
+	element.style.display = 'none';
+	document.body.appendChild(element);
+
+	element.click();
+	document.body.removeChild(element); 
+}
 
 const onDrop = (event) => {
   const type = event.dataTransfer?.getData('application/vueflow')
@@ -133,6 +162,7 @@ const onDrop = (event) => {
       <MiniMap />
       <Controls />
 
+
       <Panel :position="PanelPosition.TopRight" class="controls">
         <button style="background-color: #113285; color: white" title="Reset Transform" @click="resetTransform">
           <svg width="16" height="16" viewBox="0 0 32 32">
@@ -140,12 +170,18 @@ const onDrop = (event) => {
           </svg>
         </button>
 
-        <button style="background-color: #6f3381" title="Shuffle Node Positions" @click="updatePos">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path
-              fill="#FFFFFB"
-              d="M14 20v-2h2.6l-3.2-3.2l1.425-1.425L18 16.55V14h2v6Zm-8.6 0L4 18.6L16.6 6H14V4h6v6h-2V7.4Zm3.775-9.425L4 5.4L5.4 4l5.175 5.175Z"
-            />
+        <button style="background-color: #113285; color: white" title="Reset Transform" @click="onRestore">
+          <svg width="16" height="16" viewBox="0 0 32 32">
+            <path fill="#FFFFFB" d="M18 28A12 12 0 1 0 6 16v6.2l-3.6-3.6L1 20l6 6l6-6l-1.4-1.4L8 22.2V16a10 10 0 1 1 10 10Z" />
+          </svg>
+        </button>
+
+        <button style="background-color: #6f3381" title="Shuffle Node Positions" @click="onSave">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="#FFFFFB"/>
+            <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+            <circle cx="12" cy="14" r="2" />
+            <polyline points="14 4 14 8 8 8 8 4" />
           </svg>
         </button>
 
@@ -178,6 +214,24 @@ const onDrop = (event) => {
               fill="#292524"
               d="M20 19V7H4v12h16m0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16m-7 14v-2h5v2h-5m-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59l3.99-4Z"
             />
+          </svg>
+        </button>
+
+        <button title="Export" @click="importFile">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+            <polyline points="7 9 12 4 17 9" />
+            <line x1="12" y1="4" x2="12" y2="16" />
+          </svg>
+        </button>
+
+        <button title="Export" @click="saveFile">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+            <polyline points="7 11 12 16 17 11" />
+            <line x1="12" y1="4" x2="12" y2="16" />
           </svg>
         </button>
       </Panel>
