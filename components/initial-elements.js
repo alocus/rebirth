@@ -1,4 +1,18 @@
-import { MarkerType } from '@vue-flow/core'
+import { MarkerType, Position } from '@vue-flow/core'
+
+export const nodeDefaults = {
+  sourcePosition: Position.Right,
+  targetPosition: Position.Left,
+  style: {
+    borderRadius: '100%',
+    backgroundColor: '#fff',
+    width: 50,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+};
 
 /**
  * You can pass elements together as a v-model value
@@ -11,6 +25,7 @@ export const initialElements = [
     label: 'Node 1',
     position: { x: 250, y: 5 },
     class: 'light',
+    ...nodeDefaults
   },
   {
     id: '2',
