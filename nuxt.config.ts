@@ -1,9 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // https://v3.nuxtjs.org/api/configuration/nuxt.config
-  css: [
-    'vuetify/lib/styles/main.sass'
-  ],
+  // https://github.com/CodyBontecou/nuxt3-and-vuetify/blob/main/nuxt.config.ts
+  css: ["vuetify/lib/styles/main.sass", "@mdi/font/css/materialdesignicons.min.css"],
   build: {
     transpile: ['vuetify'],
   },
@@ -13,7 +11,7 @@ export default defineNuxtConfig({
     },
   },
 
-
+  // Auto import stores dir and pinia
   imports: {
     dirs: ['stores'],
   },

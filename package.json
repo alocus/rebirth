@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@braks/vue-flow": "latest",
+    "@mdi/font": "^7.0.96",
     "@pinia/nuxt": "^0.4.6",
     "@vue-flow/background": "^1.0.0",
     "@vue-flow/controls": "^1.0.0",
