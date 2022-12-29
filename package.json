@@ -15,7 +15,9 @@
     "@vue-flow/core": "^1.9.1",
     "@vue-flow/minimap": "^1.0.0",
     "@vue-flow/node-resizer": "^1.0.0",
-    "@vue-flow/node-toolbar": "^1.0.1"
+    "@vue-flow/node-toolbar": "^1.0.1",
+    "sass": "^1.57.1",
+    "vuetify": "next"
   },
   "devDependencies": {
     "nuxt": "3.0.0"

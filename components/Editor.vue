@@ -216,7 +216,10 @@ const onDrop = (event) => {
             />
           </svg>
         </button>
-
+        <VFileInput
+          label="Plain"
+          variant="plain"
+        />
         <button title="Export" @click="importFile">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

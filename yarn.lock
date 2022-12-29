@@ -1897,13 +1897,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.8.3":
-  version: 3.27.0
-  resolution: "core-js@npm:3.27.0"
-  checksum: 14bf6772e1c73a1cb3848ff63cae8d8f28354195e95ff550f2c4a7ae04650987691e37d6c9fe73789ffd97055b024fc7df825c203965f9a9b9aa6fb9f26f8571
-  languageName: node
-  linkType: hard
-
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -3616,7 +3609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klona@npm:^2.0.4, klona@npm:^2.0.5":
+"klona@npm:^2.0.5":
   version: 2.0.5
   resolution: "klona@npm:2.0.5"
   checksum: 8c976126ea252b766e648a4866e1bccff9d3b08432474ad80c559f6c7265cf7caede2498d463754d8c88c4759895edd8210c85c0d3155e6aae4968362889466f
@@ -4133,13 +4126,6 @@ __metadata:
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
   checksum: b8ffeb1e262eff7968fc90a2b6767b04cfd9842582a9d0ece0af7049537266e7b2506dfb1d107a32f06dd849ab2aea834d5830f7f4d0e5cb7d36e1ae55d021d9
-  languageName: node
-  linkType: hard
-
-"neo-async@npm:^2.6.2":
-  version: 2.6.2
-  resolution: "neo-async@npm:2.6.2"
-  checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
   languageName: node
   linkType: hard
 
@@ -5364,12 +5350,9 @@ __metadata:
     "@vue-flow/minimap": ^1.0.0
     "@vue-flow/node-resizer": ^1.0.0
     "@vue-flow/node-toolbar": ^1.0.1
-    core-js: ^3.8.3
     nuxt: 3.0.0
-    sass: ^1.32.7
-    sass-loader: ^12.0.0
-    vue-class-component: ^8.0.0-0
-    vue-file-selector: ^2.0.2
+    sass: ^1.57.1
+    vuetify: next
   languageName: unknown
   linkType: soft
 
@@ -5419,32 +5402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:^12.0.0":
-  version: 12.6.0
-  resolution: "sass-loader@npm:12.6.0"
-  dependencies:
-    klona: ^2.0.4
-    neo-async: ^2.6.2
-  peerDependencies:
-    fibers: ">= 3.1.0"
-    node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
-    sass: ^1.3.0
-    sass-embedded: "*"
-    webpack: ^5.0.0
-  peerDependenciesMeta:
-    fibers:
-      optional: true
-    node-sass:
-      optional: true
-    sass:
-      optional: true
-    sass-embedded:
-      optional: true
-  checksum: 5d73a428588150f704016aa27397941bb9246cecd2ee083b573e95d969fc080ac6a16f2fe1cc64aca08f6e70da6f3c586ee68f0efc9f527fecc360e5f1c299ec
-  languageName: node
-  linkType: hard
-
-"sass@npm:^1.32.7":
+"sass@npm:^1.57.1":
   version: 1.57.1
   resolution: "sass@npm:1.57.1"
   dependencies:
@@ -6303,15 +6261,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-class-component@npm:^8.0.0-0":
-  version: 8.0.0-rc.1
-  resolution: "vue-class-component@npm:8.0.0-rc.1"
-  peerDependencies:
-    vue: ^3.0.0
-  checksum: 2e011478d94915e3a794561bfaaf820143697dea8268e4f749486f348b2e28583aee88a68f540ce7771d00129362a3883687495ad80a3928090a0524bfef7a66
-  languageName: node
-  linkType: hard
-
 "vue-demi@npm:*":
   version: 0.13.11
   resolution: "vue-demi@npm:0.13.11"
@@ -6332,15 +6281,6 @@ __metadata:
   version: 0.1.0
   resolution: "vue-devtools-stub@npm:0.1.0"
   checksum: 3f19fa2ab6d7f65de459f6c10d8f1d682dcd4ac55934c37617423d4a70efb98aa0a35f290120ec0c429ddcc0bdb7458836f87763ee0b8acfe007e4869f67dbbb
-  languageName: node
-  linkType: hard
-
-"vue-file-selector@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "vue-file-selector@npm:2.0.2"
-  peerDependencies:
-    vue: ^3.2.37
-  checksum: 48b3b0f67edde2f4c6ea83d9219ebf6f6741f02254ed8bab4379058acf60bccf7559e28fe4a761bd7b0a3c83356c98789ed1c4dd4975684f80df74726a3c923f
   languageName: node
   linkType: hard
 
@@ -6365,6 +6305,25 @@ __metadata:
     "@vue/server-renderer": 3.2.45
     "@vue/shared": 3.2.45
   checksum: df60ca80cb9fdce408eccd0c7a4d44720df9855c62e340448650d8048b1edd25da6f3bd99ed7efc19efbe1f3fdcec4ae8067ab10ae50be5bb363d996ad29251a
+  languageName: node
+  linkType: hard
+
+"vuetify@npm:next":
+  version: 3.0.6
+  resolution: "vuetify@npm:3.0.6"
+  peerDependencies:
+    vite-plugin-vuetify: ^1.0.0-alpha.12
+    vue: ^3.2.0
+    vue-i18n: ^9.0.0
+    webpack-plugin-vuetify: ^2.0.0-alpha.11
+  peerDependenciesMeta:
+    vite-plugin-vuetify:
+      optional: true
+    vue-i18n:
+      optional: true
+    webpack-plugin-vuetify:
+      optional: true
+  checksum: d939e200be266f5c25acc1c13b2ffc65218f8cf36ab7208af733c93c736cc74fb87f4ed0efd661b3ba905ca33e3dd2f42634006636f52e6c569a437e074869a5
   languageName: node
   linkType: hard
 
