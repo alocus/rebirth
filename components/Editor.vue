@@ -181,11 +181,11 @@ const onDrop = (event) => {
       <MiniMap />
       <Controls />
       <Panel :position="PanelPosition.TopRight" class="controls">
-        <v-btn title="Import" @click="toggleFileSelector" icon="mdi-file-import"> </v-btn>
-        <v-btn title="Export" @click="exportFile" icon="mdi-file-export"> </v-btn>
+        <v-btn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </v-btn>
+        <v-btn title="Export" @click="exportFile" icon="mdi-cloud-download"> </v-btn>
         <v-btn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></v-btn>
-        <v-btn title="Load" @click="onRestore" icon="mdi-restore"></v-btn>
-        <v-btn title="Save" color="secondary" @click="onSave" icon="mdi-content-save"></v-btn>
+        <v-btn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></v-btn>
+        <v-btn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></v-btn>
         <v-btn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></v-btn>
         <!-- 
           <v-btn :style="{ backgroundColor: dark ? '#FFFFFB' : '#292524', color: dark ? '#292524' : '#FFFFFB' }"
@@ -193,7 +193,7 @@ const onDrop = (event) => {
           </v-btn>
         -->
         <v-btn title="LogToObject" @click="logToObject" icon="mdi-export" ></v-btn>
-        <VFileInput label="Graph JSONs" chips multiple v-if="showFileSelector" accept=".json" icon="mdi-file-import"></VFileInput>
+        <VFileInput label="Select your graphs" chips multiple counter v-if="showFileSelector" accept=".json" prepend-icon="mdi-graph-outline"></VFileInput>
       </Panel>
     </VueFlow>
     <Sidebar />
