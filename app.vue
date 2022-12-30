@@ -1,5 +1,10 @@
 <template>
-  <NuxtPage />
+  <VLocaleProvider>
+    <!-- ℹ️ This is required to set the background color of active nav link based on currently active global theme's primary -->
+    <VApp>
+      <NuxtPage />
+    </VApp>
+  </VLocaleProvider>
 </template>
 
 <style>
