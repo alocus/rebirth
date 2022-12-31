@@ -1,4 +1,5 @@
 <script setup>
+
 const onDragStart = (event, nodeType) => {
   if (event.dataTransfer) {
     event.dataTransfer.setData('application/vueflow', nodeType)
@@ -18,5 +19,7 @@ const onDragStart = (event, nodeType) => {
 
       <div class="vue-flow__node-output" :draggable="true" @dragstart="onDragStart($event, 'output')">Output Node</div>
     </div>
+
+    <NodeConfigPanel></NodeConfigPanel>
   </aside>
 </template>

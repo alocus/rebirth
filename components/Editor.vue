@@ -181,27 +181,25 @@ const onDrop = (event) => {
       <MiniMap />
       <Controls />
       <Panel :position="PanelPosition.TopRight" class="controls">
-        <VContainer>
-          <VToolbar>
-            <VBtn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
-            <VBtn title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
-            <v-spacer></v-spacer>
-            <VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn>
-            <VBtn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></VBtn>
-            <VBtn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></VBtn>
-            <VBtn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
-            <!-- 
-              <VBtn :style="{ backgroundColor: dark ? '#FFFFFB' : '#292524', color: dark ? '#292524' : '#FFFFFB' }"
-              @click="toggleClass"  :prepend-icon="dark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' " >
-              </VBtn>
-            -->
-            <VBtn title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn>
-          </VToolbar>
-        </VContainer>
+        <VToolbar>
+          <VBtn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
+          <VBtn title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
+          <v-spacer></v-spacer>
+          <VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn>
+          <VBtn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></VBtn>
+          <VBtn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></VBtn>
+          <VBtn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
+          <!-- 
+            <VBtn :style="{ backgroundColor: dark ? '#FFFFFB' : '#292524', color: dark ? '#292524' : '#FFFFFB' }"
+            @click="toggleClass"  :prepend-icon="dark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' " >
+            </VBtn>
+          -->
+          <VBtn title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn>
+        </VToolbar>
         <VFileInput label="Select your graphs" chips multiple counter v-if="showFileSelector" accept=".json" prepend-icon="mdi-graph-outline"></VFileInput>
       </Panel>
     </VueFlow>
-    <Sidebar />
+    <Sidebar><NodeConfigPanel></NodeConfigPanel></Sidebar>
   </div>
 </template>
 <style>
@@ -233,14 +231,5 @@ body,
 }
 
 .basicflow.dark{background:#57534e;color:#fffffb}.basicflow.dark .vue-flow__node{background:#292524;color:#fffffb}.basicflow.dark .vue-flow__controls .vue-flow__controls-button{background:#292524;fill:#fffffb;border-color:#fffffb}.basicflow.dark .vue-flow__edge-textbg{fill:#292524}.basicflow.dark .vue-flow__edge-text{fill:#fffffb}
-.mbasicflow .tmp .control{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.mbasicflow .tmp .control button{padding:4px;border-radius:5px;font-weight:600;-webkit-box-shadow:0px 5px 10px 0px rgba(0,0,0,.3);box-shadow:0 5px 10px #0000004d;cursor:pointer;display:flex;justify-content:center;align-items:center}.basicflow .controls button:hover{transform:scale(102%);transition:.25s all ease}
-
-.mbasicflow .controls button{
-  width:24px;
-  height:24px;
-  background-color: #113285; 
-  color: #FFFFFB
-}
 
 </style>
