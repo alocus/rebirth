@@ -181,18 +181,23 @@ const onDrop = (event) => {
       <MiniMap />
       <Controls />
       <Panel :position="PanelPosition.TopRight" class="controls">
-        <v-btn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </v-btn>
-        <v-btn title="Export" @click="exportFile" icon="mdi-cloud-download"> </v-btn>
-        <v-btn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></v-btn>
-        <v-btn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></v-btn>
-        <v-btn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></v-btn>
-        <v-btn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></v-btn>
-        <!-- 
-          <v-btn :style="{ backgroundColor: dark ? '#FFFFFB' : '#292524', color: dark ? '#292524' : '#FFFFFB' }"
-          @click="toggleClass"  :prepend-icon="dark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' " >
-          </v-btn>
-        -->
-        <v-btn title="LogToObject" @click="logToObject" icon="mdi-export" ></v-btn>
+        <VContainer>
+          <VToolbar>
+            <VBtn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
+            <VBtn title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
+            <v-spacer></v-spacer>
+            <VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn>
+            <VBtn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></VBtn>
+            <VBtn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></VBtn>
+            <VBtn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
+            <!-- 
+              <VBtn :style="{ backgroundColor: dark ? '#FFFFFB' : '#292524', color: dark ? '#292524' : '#FFFFFB' }"
+              @click="toggleClass"  :prepend-icon="dark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' " >
+              </VBtn>
+            -->
+            <VBtn title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn>
+          </VToolbar>
+        </VContainer>
         <VFileInput label="Select your graphs" chips multiple counter v-if="showFileSelector" accept=".json" prepend-icon="mdi-graph-outline"></VFileInput>
       </Panel>
     </VueFlow>
