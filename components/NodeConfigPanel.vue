@@ -1,5 +1,5 @@
 <script setup>
-import { VueFlow, useVueFlow } from '@vue-flow/core'
+import { useVueFlow } from '@vue-flow/core'
 import { reactive } from 'vue'
 
 const defaultLabel = '-'
