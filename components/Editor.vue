@@ -5,7 +5,6 @@ import { Controls } from '@vue-flow/controls'
 import { MiniMap } from '@vue-flow/minimap'
 import { ref } from 'vue'
 import { initialElements } from './initial-elements.js'
-// import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { nextTick, watch } from 'vue'
 import Sidebar from './Sidebar.vue'
 
@@ -14,19 +13,27 @@ const getId = () => `dndnode_${id++}`
 
 const flowKey = 'nodes-flow'
 
+// input files 
+let chosenFile = ref()
+
+const importTxt = () =>{
+  debugger
+  if (!chosenFile) {this.data = "No File Chosen"}
+  var reader = new FileReader();
+  
+  // Use the javascript reader object to load the contents
+  // of the file in the v-model prop
+  reader.readAsText(chosenFile);
+  reader.onload = () => {
+    onRestore(reader.result)
+  }
+}
+
 /**
  * useVueFlow provides all event handlers and store properties
  * You can pass the composable an object that has the same properties as the VueFlow component props
  */
 const { setNodes, setEdges, dimensions, onPaneReady, onNodeDragStop, onConnect, addEdges, setTransform, toObject, findNode, nodes, edges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
-  nodes: [
-    {
-      id: '1',
-      type: 'input',
-      label: 'input node',
-      position: { x: 250, y: 25 },
-    },
-  ],
 })
 
 
@@ -42,9 +49,10 @@ const onSave = () => {
 /**
  * Restore graph from localStorage - like an Undo before save
  */
-const onRestore = () => {
-  const flow = JSON.parse(localStorage.getItem(flowKey))
-
+const onRestore = ( file = null ) => {
+  
+  const flow = file??JSON.parse(localStorage.getItem(flowKey))
+debugger
   if (flow) {
     const [x = 0, y = 0] = flow.position
     setNodes(flow.nodes)
@@ -184,7 +192,7 @@ const onDrop = (event) => {
         <VToolbar>
           <VBtn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
           <VBtn title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
-          <v-spacer></v-spacer>
+          <v-divider vertical></v-divider>
           <VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn>
           <VBtn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></VBtn>
           <VBtn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></VBtn>
@@ -196,7 +204,32 @@ const onDrop = (event) => {
           -->
           <VBtn title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn>
         </VToolbar>
-        <VFileInput label="Select your graphs" chips multiple counter v-if="showFileSelector" accept=".json" prepend-icon="mdi-graph-outline"></VFileInput>
+
+        <v-content v-if="showFileSelector" >
+          <v-container fill-height>
+            <v-row justify="center">
+              <v-col cols="auto">
+                <v-card width="auto" height="auto" raised>
+                  <v-card-title>Vuetify v-file-input Example:</v-card-title>
+                  <br>
+                  <v-card-text>
+                    <VFileInput label="Select your Karma" chips multiple counter 
+                      v-model="chosenFile" accept=".json" prepend-icon="mdi-graph-outline">
+                    </VFileInput>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn   right @click="importTxt">Import Karma</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-content>
+  
+
+
+        
       </Panel>
     </VueFlow>
     <Sidebar><NodeConfigPanel></NodeConfigPanel></Sidebar>
