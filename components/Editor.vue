@@ -10,24 +10,28 @@ import Sidebar from './Sidebar.vue'
 
 let id = 0
 const getId = () => `dndnode_${id++}`
+const selectedFiles = ref([])
 
 const flowKey = 'nodes-flow'
 
-// input files 
-let chosenFile = ref()
-
-const importTxt = () =>{
+const importTxt = () => {
   debugger
-  if (!chosenFile) {this.data = "No File Chosen"}
-  var reader = new FileReader();
+  showFileSelector.value=false
   
-  // Use the javascript reader object to load the contents
-  // of the file in the v-model prop
-  reader.readAsText(chosenFile);
-  reader.onload = () => {
-    onRestore(reader.result)
+  const fileReader = new FileReader();
+ 
+  for (let i = 0; i < selectedFiles.value.length; i++) {
+    console.log(selectedFiles.value[i])
+    fileReader.readAsText(selectedFiles.value[i]);
+  }
+
+  fileReader.onload = function(event) {
+    console.log(event)
+    // alert(fileReader.result);
+    onRestore(fileReader.result)
   }
 }
+
 
 /**
  * useVueFlow provides all event handlers and store properties
@@ -50,9 +54,10 @@ const onSave = () => {
  * Restore graph from localStorage - like an Undo before save
  */
 const onRestore = ( file = null ) => {
-  
-  const flow = file??JSON.parse(localStorage.getItem(flowKey))
-debugger
+  debugger
+  const graph = file??localStorage.getItem(flowKey)
+  const flow = JSON.parse(graph)
+
   if (flow) {
     const [x = 0, y = 0] = flow.position
     setNodes(flow.nodes)
@@ -205,31 +210,25 @@ const onDrop = (event) => {
           <VBtn title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn>
         </VToolbar>
 
-        <v-content v-if="showFileSelector" >
-          <v-container fill-height>
-            <v-row justify="center">
-              <v-col cols="auto">
-                <v-card width="auto" height="auto" raised>
-                  <v-card-title>Vuetify v-file-input Example:</v-card-title>
-                  <br>
-                  <v-card-text>
-                    <VFileInput label="Select your Karma" chips multiple counter 
-                      v-model="chosenFile" accept=".json" prepend-icon="mdi-graph-outline">
-                    </VFileInput>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn   right @click="importTxt">Import Karma</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-content>
-  
-
-
-        
+        <v-container fill-height v-if="showFileSelector">
+          <VRow justify="center">
+            <VCol cols="auto">
+              <v-card width="auto" height="auto" raised>
+                <v-card-title>Vuetify v-file-input Example:</v-card-title>
+                <br>
+                <v-card-text>
+                  <VFileInput v-model="selectedFiles" label="Select your files" chips counter multiple 
+                    accept=".json" prepend-icon="mdi-graph-outline">
+                  </VFileInput>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn right @click="importTxt">Read File</v-btn>
+                </v-card-actions>
+              </v-card>
+            </VCol>
+          </VRow>
+        </v-container>
       </Panel>
     </VueFlow>
     <Sidebar><NodeConfigPanel></NodeConfigPanel></Sidebar>
