@@ -60,14 +60,12 @@ async function importFiles () {
   });
 }
 
-
 /**
  * useVueFlow provides all event handlers and store properties
  * You can pass the composable an object that has the same properties as the VueFlow component props
  */
 const { setNodes, setEdges, dimensions, onPaneReady, onNodeDragStop, onConnect, addEdges, setTransform, toObject, findNode, nodes, edges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
 })
-
 
 /**
  * Our elements
@@ -79,11 +77,9 @@ const onSave = () => {
 }
 
 /**
- * Restore graph from localStorage - like an Undo before save
+ * Restore graph and load on map
  */
-const onRestore = ( file = null ) => {
-  debugger
-  const graph = file??localStorage.getItem(flowKey)
+const onRestore = ( graph ) => {
   const flow = JSON.parse(graph)
 
   if (flow) {
@@ -93,6 +89,16 @@ const onRestore = ( file = null ) => {
     setTransform({ x, y, zoom: flow.zoom || 0 })
   }
 }
+
+const restoreFromLocal = () => {
+  onRestore(localStorage.getItem(flowKey))
+}
+
+const clearGraph = () =>{
+  const initMap = {nodes:[],edges:[],position:[],zoom:1}
+  onRestore(JSON.stringify(initMap))
+}
+
 
 
 /**
@@ -222,21 +228,21 @@ const onDrop = (event) => {
       <MiniMap />
       <Controls />
       <Panel :position="PanelPosition.TopRight" class="controls">
-        <VToolbar>
-          <VBtn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
-          <VBtn title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
+        <VToolbar dense :color="dark ? '#292524' : '#eeeeec'">
+          <VBtn color="blue-grey" title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
+          <VBtn color="blue-grey" title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
           <v-divider vertical></v-divider>
           <!--VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn -->
-          <VBtn title="Clear" @click="elements={}" icon="mdi-eraser"></VBtn>
-          <VBtn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></VBtn>
-          <VBtn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></VBtn>
-          <VBtn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
+          <VBtn color="blue-grey" title="Clear" @click="clearGraph" icon="mdi-eraser"></VBtn>
+          <VBtn color="blue-grey" title="Load the last Snapshot" @click="restoreFromLocal" icon="mdi-camera-burst"></VBtn>
+          <VBtn color="blue-grey" title="Take a Snapshot" @click="onSave" icon="mdi-camera-iris"></VBtn>
+          <VBtn color="blue-grey" title="Dark" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
           <!-- 
             <VBtn :style="{ backgroundColor: dark ? '#FFFFFB' : '#292524', color: dark ? '#292524' : '#FFFFFB' }"
             @click="toggleClass"  :prepend-icon="dark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' " >
             </VBtn>
           -->
-          <VBtn title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn>
+          <!--VBtn color="blue-grey" title="LogToObject" @click="logToObject" icon="mdi-export" ></VBtn-->
         </VToolbar>
 
         <v-container fill-height v-if="showFileSelector">
@@ -293,4 +299,8 @@ body,
 
 .basicflow.dark{background:#57534e;color:#fffffb}.basicflow.dark .vue-flow__node{background:#292524;color:#fffffb}.basicflow.dark .vue-flow__controls .vue-flow__controls-button{background:#292524;fill:#fffffb;border-color:#fffffb}.basicflow.dark .vue-flow__edge-textbg{fill:#292524}.basicflow.dark .vue-flow__edge-text{fill:#fffffb}
 
+.v-toolbar__content {
+  height: 36px !important;
+  
+}
 </style>
