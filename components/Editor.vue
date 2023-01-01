@@ -226,7 +226,8 @@ const onDrop = (event) => {
           <VBtn title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
           <VBtn title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
           <v-divider vertical></v-divider>
-          <VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn>
+          <!--VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn -->
+          <VBtn title="Clear" @click="elements={}" icon="mdi-eraser"></VBtn>
           <VBtn title="Load the last Snapshot" color="secondary" @click="onRestore" icon="mdi-camera-burst"></VBtn>
           <VBtn title="Take a Snapshot" color="secondary" @click="onSave" icon="mdi-camera-iris"></VBtn>
           <VBtn title="Dark" color="primary" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
