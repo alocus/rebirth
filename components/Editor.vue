@@ -14,22 +14,63 @@ const selectedFiles = ref([])
 
 const flowKey = 'nodes-flow'
 
-const importTxt = () => {
+
+/**
+ *  Simple JavaScript Promise that reads a file as text.
+ **/
+function readFileAsText(file){
   debugger
   showFileSelector.value=false
+  return new Promise(function(resolve,reject){
+      let fr = new FileReader();
+
+      fr.onload = function(){
+          resolve(onRestore(fr.result));
+      };
+
+      fr.onerror = function(){
+          reject(fr);
+      };
+
+      fr.readAsText(file);
+  });
+}
+
+
+async function importTxt () {
+  // debugger
+  // showFileSelector.value=false
   
-  const fileReader = new FileReader();
+  // const fileReader = new FileReader();
  
-  for (let i = 0; i < selectedFiles.value.length; i++) {
-    console.log(selectedFiles.value[i])
-    fileReader.readAsText(selectedFiles.value[i]);
+  // for (let i = 0; i < selectedFiles.value.length; i++) {
+  //   console.log(selectedFiles.value[i])
+  //   await fileReader.readAsText(selectedFiles.value[i]);
+  // }
+
+  // fileReader.onload = function(event) {
+  //   console.log(event)
+  //   // alert(fileReader.result);
+  //   onRestore(fileReader.result)
+  // }
+
+  let readers = [];
+  let files = selectedFiles.value
+  // Abort if there were no files selected
+  if(!files.length) return;
+
+  // Store promises in array
+  for(let i = 0;i < files.length;i++){
+      readers.push(readFileAsText(files[i]));
   }
 
-  fileReader.onload = function(event) {
-    console.log(event)
-    // alert(fileReader.result);
-    onRestore(fileReader.result)
-  }
+  // Trigger Promises
+  Promise.all(readers).then((values) => {
+      // Values will be an array that contains an item
+      // with the text of every selected file
+      // ["File1 Content", "File2 Content" ... "FileN Content"]
+      console.log(values);
+  });
 }
 
 
