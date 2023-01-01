@@ -19,8 +19,7 @@ const flowKey = 'nodes-flow'
  *  Simple JavaScript Promise that reads a file as text.
  **/
 function readFileAsText(file){
-  debugger
-  showFileSelector.value=false
+  
   return new Promise(function(resolve,reject){
       let fr = new FileReader();
 
@@ -37,22 +36,8 @@ function readFileAsText(file){
 }
 
 
-async function importTxt () {
-  // debugger
-  // showFileSelector.value=false
-  
-  // const fileReader = new FileReader();
- 
-  // for (let i = 0; i < selectedFiles.value.length; i++) {
-  //   console.log(selectedFiles.value[i])
-  //   await fileReader.readAsText(selectedFiles.value[i]);
-  // }
-
-  // fileReader.onload = function(event) {
-  //   console.log(event)
-  //   // alert(fileReader.result);
-  //   onRestore(fileReader.result)
-  // }
+async function importFiles () {
+  showFileSelector.value=false
 
   let readers = [];
   let files = selectedFiles.value
@@ -61,7 +46,8 @@ async function importTxt () {
 
   // Store promises in array
   for(let i = 0;i < files.length;i++){
-      readers.push(readFileAsText(files[i]));
+    readFileAsText(files[i])
+    readers.push(files[i].name);
   }
 
   // Trigger Promises
@@ -69,6 +55,7 @@ async function importTxt () {
       // Values will be an array that contains an item
       // with the text of every selected file
       // ["File1 Content", "File2 Content" ... "FileN Content"]
+      debugger
       console.log(values);
   });
 }
@@ -264,7 +251,7 @@ const onDrop = (event) => {
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn right @click="importTxt">Read File</v-btn>
+                  <v-btn right @click="importFiles">Read File</v-btn>
                 </v-card-actions>
               </v-card>
             </VCol>
