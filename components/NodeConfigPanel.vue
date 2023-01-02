@@ -34,7 +34,6 @@ onNodeClick((nodeMouseEvent) => {
   }
 })
 
-
 onPaneReady(({ fitView }) => {
   fitView()
   updateNode()
@@ -44,7 +43,7 @@ onPaneReady(({ fitView }) => {
 
 <template>
  
-    <div class="updatenode__controls">
+    <div v-if="selectedNodeId" class="updatenode__controls">
       <label>label:</label>
       <input v-model="opts.label" @input="updateNode" />
 
