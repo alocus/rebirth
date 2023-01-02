@@ -5360,6 +5360,7 @@ __metadata:
     "@vue-flow/node-toolbar": ^1.0.1
     nuxt: 3.0.0
     sass: ^1.57.1
+    vue3-touch-events: ^4.1.0
     vuetify: next
   languageName: unknown
   linkType: soft
@@ -6300,6 +6301,13 @@ __metadata:
   peerDependencies:
     vue: ^3.2.0
   checksum: c7f0156ac03a9561d110f5ff778121eee7c8c154be6ec5064558ba22ab5237db36f29ffffc95cc16d692cc68a26df0c434f395401c0e3b48f782c7bed51391c6
+  languageName: node
+  linkType: hard
+
+"vue3-touch-events@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "vue3-touch-events@npm:4.1.0"
+  checksum: c063dce6e4734e571e4bb355ee9b177abbbb102e6b109b0c2a0396052672d95343bbeda2eeda0d7a6a06acadc5a41a77f6c079a7dc2b2e08b3f6a60e1070a076
   languageName: node
   linkType: hard
 

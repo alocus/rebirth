@@ -7,11 +7,14 @@ import { ref } from 'vue'
 import { initialElements } from './initial-elements.js'
 import { nextTick, watch } from 'vue'
 import Sidebar from './Sidebar.vue'
+import ConnectionLine from './SnappableConnectionLine.vue'
 
 let id = 0
 const getId = () => `dndnode_${id++}`
 const selectedFiles = ref([])
 
+const selectNodes = ref([])
+const selectEdges = ref([])
 const flowKey = 'nodes-flow'
 
 
@@ -55,7 +58,6 @@ async function importFiles () {
       // Values will be an array that contains an item
       // with the text of every selected file
       // ["File1 Content", "File2 Content" ... "FileN Content"]
-      debugger
       console.log(values);
   });
 }
@@ -64,7 +66,7 @@ async function importFiles () {
  * useVueFlow provides all event handlers and store properties
  * You can pass the composable an object that has the same properties as the VueFlow component props
  */
-const { setNodes, setEdges, dimensions, onPaneReady, onNodeDragStop, onConnect, addEdges, setTransform, toObject, findNode, nodes, edges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
+const { setNodes, setEdges, dimensions, onPaneReady, onNodesChange, removeNodes, onEdgesChange, removeEdges, onNodeDragStop, onConnect, addEdges, setTransform, toObject, findNode, nodes, edges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
 })
 
 /**
@@ -99,8 +101,6 @@ const clearGraph = () =>{
   onRestore(JSON.stringify(initMap))
 }
 
-
-
 /**
  * This is a Vue Flow event-hook which can be listened to from anywhere you call the composable, instead of only on the main component
  *
@@ -108,9 +108,33 @@ const clearGraph = () =>{
  */
 onPaneReady(({ fitView }) => {
   fitView()
+  selectNodes.value = []
+  selectEdges.value = []
 })
 
 onNodeDragStop((e) => console.log('drag stop', e))
+
+onNodesChange((arrayOfNodes) => {
+  if(Array.isArray(arrayOfNodes) ) {
+    selectNodes.value = arrayOfNodes
+  }
+})
+
+const removeNodesFromMap = () => {
+  removeNodes(selectNodes.value)
+  selectNodes.value = []
+}
+
+onEdgesChange((arrayOfEdges) => {
+  if(Array.isArray(arrayOfEdges)) {
+    selectEdges.value = arrayOfEdges
+  }
+}) 
+
+const removeEdgesFromMap = () => {
+  removeEdges(selectEdges.value)
+  selectEdges.value = []
+}
 
 const onDragOver = (event) => {
   event.preventDefault()
@@ -128,7 +152,6 @@ onConnect((params) => addEdges([params]))
 
 const dark = ref(false)
 const showFileSelector = ref(false)
-
 
 /**
  * To update node properties you can simply use your elements v-model and mutate the elements directly
@@ -185,7 +208,6 @@ const exportFile = () => {
  */
 const onDrop = (event) => {
   const type = event.dataTransfer?.getData('application/vueflow')
-
   const { left, top } = vueFlowRef.value.getBoundingClientRect()
 
   const position = project({
@@ -220,20 +242,31 @@ const onDrop = (event) => {
 </script>
 
 <template>
-  <div class="dndflow" @drop="onDrop">
-    <VueFlow @dragover="onDragOver" v-model="elements" :class="{ dark }" class="basicflow" :default-zoom="1.5"
-      :min-zoom="0.2" :max-zoom="4">
-
+  <div class="dndflow" @drop="onDrop" @touchend="onDrop">
+    <VueFlow @dragover="onDragOver" @touchmove="onDragOver" v-model="elements" :class="{ dark }" class="basicflow" :default-zoom="1.5"
+      :min-zoom="0.2" :max-zoom="4" auto-connect fit-view-on-init>
+      <template #connection-line="{ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition }">
+        <ConnectionLine
+          :source-x="sourceX"
+          :source-y="sourceY"
+          :target-x="targetX"
+          :target-y="targetY"
+          :source-position="sourcePosition"
+          :target-position="targetPosition"
+        />
+      </template>
       <Background :pattern-color="dark ? '#FFFFFB' : '#aaa'" gap="8" />
       <MiniMap />
       <Controls />
       <Panel :position="PanelPosition.TopRight" class="controls">
         <VToolbar dense :color="dark ? '#292524' : '#eeeeec'">
+          <VBtn v-if="selectEdges.length>0" color="blue-grey" title="Remove Edges" @click="removeEdgesFromMap" icon="mdi-vector-polyline-remove"> </VBtn>
+          <VBtn v-if="selectNodes.length>0" color="blue-grey" title="Remove Node" @click="removeNodesFromMap" icon="mdi-vector-square-remove"> </VBtn>
           <VBtn color="blue-grey" title="Import" @click="toggleFileSelector" icon="mdi-cloud-upload"> </VBtn>
           <VBtn color="blue-grey" title="Export" @click="exportFile" icon="mdi-cloud-download"> </VBtn>
           <v-divider vertical></v-divider>
           <!--VBtn title="Reset" @click="resetTransform" icon="mdi-crop-portrait"></VBtn -->
-          <VBtn color="blue-grey" title="Clear" @click="clearGraph" icon="mdi-eraser"></VBtn>
+          <VBtn color="blue-grey" title="Clear" @click="clearGraph" icon="mdi-trash-can"></VBtn>
           <VBtn color="blue-grey" title="Load the last Snapshot" @click="restoreFromLocal" icon="mdi-camera-burst"></VBtn>
           <VBtn color="blue-grey" title="Take a Snapshot" @click="onSave" icon="mdi-camera-iris"></VBtn>
           <VBtn color="blue-grey" title="Dark" @click="toggleClass" icon="mdi-theme-light-dark"></VBtn>
