@@ -3,24 +3,42 @@ import { useVueFlow } from '@vue-flow/core'
 import { reactive } from 'vue'
 
 const defaultLabel = '-'
-const { onPaneReady, getNode } = useVueFlow()
+const { onPaneReady, getNode, onNodeClick } = useVueFlow()
+
+const selectedNodeId = ref(null)
 
 const opts = reactive({
   bg: '#eeeeee',
-  label: 'Node 1',
+  label: '',
   hidden: false,
 })
 
 const updateNode = () => {
-  const node = getNode.value('1')
+  if(!selectedNodeId.value) return
+
+  const node = getNode.value(selectedNodeId.value)
   node.label = opts.label.trim() !== '' ? opts.label : defaultLabel
   node.style = { backgroundColor: opts.bg }
   node.hidden = opts.hidden
 }
 
+onNodeClick((nodeMouseEvent) => {
+  if(nodeMouseEvent.node) {
+    const node = nodeMouseEvent.node
+    selectedNodeId.value = node.id
+
+    console.log('node select:' + node.id)
+    opts.bg = node.style?.backgroundColor??'#eeeeee'
+    opts.label = node.label
+    opts.hidden = node.hidden 
+  }
+})
+
+
 onPaneReady(({ fitView }) => {
   fitView()
   updateNode()
+  selectedNodeId.value = null
 })
 </script>
 
